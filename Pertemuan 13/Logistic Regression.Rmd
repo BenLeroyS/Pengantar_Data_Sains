@@ -1,0 +1,50 @@
+---
+title: "Logistic Regression"
+author: "Benhard Leroy"
+date: "2025-04-30"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+data(mtcars)
+```
+
+```{r}
+head(mtcars)
+```
+
+```{r}
+library(caTools)
+```
+
+
+```{r}
+set.seed(123)
+split <- sample.split(mtcars$vs, SplitRatio = 0.8)
+```
+
+```{r}
+train_reg <- subset(mtcars, split == TRUE)
+test_reg  <- subset(mtcars, split == FALSE)
+train_reg
+test_reg
+```
+
+```{r}
+logistic_model <- glm(vs ~ wt + disp,
+                    data = train_reg,
+                    family = "binomial")
+logistic_model
+```
+
+```{r}
+summary(logistic_model)
+```
+
+```{r}
+predict_reg <- predict(logistic_model,
+                       test_reg, type = "response")
+predict_reg
+```
+

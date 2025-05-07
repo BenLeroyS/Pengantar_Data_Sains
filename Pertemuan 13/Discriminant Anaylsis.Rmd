@@ -1,0 +1,43 @@
+---
+title: "Discriminant Anaylsis"
+author: "Benhard Leroy"
+date: "2025-04-30"
+output: html_document
+---
+
+```{r}
+library(transDA)
+```
+
+```{r}
+data(iris)
+head(iris)
+summary(iris)
+```
+```{r}
+set.seed(123)
+split_indices <- sample(nrow(iris), size = round(0.8 * nrow(iris)), replace = FALSE)
+split_indices <- sort(split_indices)
+```
+
+```{r}
+traindata <- iris[split_indices,]
+testdata <- iris[-split_indices,]
+```
+
+```{r}
+MDA <- tda(x = traindata[,1:4], max_k = 2, ID = traindata$Species, trans = FALSE)
+pred <- predict(MDA, testdata[,-5])
+pred
+```
+
+```{r}
+set.seed(123)
+model <- tda(x = iris[,1:4], max_k = 2, ID = iris$Species, trans = FALSE)
+summary(model)
+
+```
+
+
+
+

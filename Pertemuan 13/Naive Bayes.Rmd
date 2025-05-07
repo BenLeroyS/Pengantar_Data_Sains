@@ -1,0 +1,54 @@
+---
+title: "Model Classification"
+author: "Benhard Leroy"
+date: "2025-04-30"
+output: html_document
+---
+```{r}
+library(naivebayes)
+library(dplyr)
+```
+
+```{r}
+data(iris)
+head(iris)
+```
+
+```{r}
+target <- "species"
+predictor <- setdiff(names(iris),  target)
+model_nb <-naive_bayes(Species  ~  .,  data  =  iris) 
+print(model_nb)
+```
+
+```{r}
+prediction  <-  predict(model_nb,  iris)
+prediction
+```
+
+```{r}
+table(Predicted  =  prediksi,  Actual  =  iris$Species)
+```
+
+```{r}
+plot(model_nb)
+```
+
+```{r}
+set.seed(123)
+index  <- sample(1:nrow(iris),  0.7* nrow(iris)) # 70%  training
+train_data  <-iris[index,  ]
+test_data  <- iris[-index,  ]
+model_nb2  <- naive_bayes(Species  ~  .,  data  =  train_data)
+prediksi_test  <-  predict(model_nb2,  test_data)
+prediksi_test
+```
+
+```{r}
+table(Predicted  =  prediksi_test,  Actual  =  test_data$Species)
+```
+
+```{r}
+mean(prediksi_test  ==  test_data$Species)
+```
+
